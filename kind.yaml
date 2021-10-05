@@ -1,0 +1,14 @@
+# Isso é do kind
+# https://kind.sigs.k8s.io/docs/user/configuration/#nodes
+kind: Cluster
+# Qual api que o kind vai se conectar para executar os comandos.
+apiVersion: kind.x-k8s.io/v1alpha4
+
+# Esse cluster vai ter 4 nós: 1 control plane e 3 workers.
+nodes:
+  # Role é o papel que esse node vai ter. O control-plane é o cara que vai gerenciar o kubernetes
+  # (é o master do kubernetes).
+  - role: control-plane
+  - role: worker
+  - role: worker
+  - role: worker
