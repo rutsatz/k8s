@@ -1,0 +1,38 @@
+# kubectl get replicasets
+# kubectl delete replicaset goserver
+# kubectl apply -f k8s/deployment.yaml
+# kubectl get deployments
+# kubectl get replicasets
+# kubectl get pods
+# kubectl describe pod goserver-7548bbf4f5-f6fsb
+
+# apps/v1 é onde fica a api do Deployment.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # nome do Deployment
+  name: goserver
+  labels:
+    app: "goserver"
+spec:
+  # Posso dizer quantas réplicas que eu quero.
+  replicas: 2
+  # Precisamos filtrar para conseguir verificar todos os pods, encaminhar tráfego.
+  # Por isso a importância dos labels, pois agora eu filtro usando eles.
+  selector:
+    matchLabels:
+      # Nome do label colocado lá no arquivo do pod.
+      app: goserver
+  # Aqui configuro o meu pod. Então eu tenho um template do pod que eu quero rodar dentro do ReplicaSet.
+  # É basicamente as mesmas informações lá do arquivo do pod.
+  template:
+    metadata:
+      # O label nos ajuda a fazer filtros, buscas, criar regras
+      labels:
+        app: "goserver"
+    # Especificações do pod
+    spec:
+      # Digo os containers que o pod vai rodar. Por padrão, sempre usamos um container por pod.
+      containers:
+        - name: goserver
+          image: "rutsatz/hello-go:v2"
