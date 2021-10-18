@@ -1,0 +1,23 @@
+# kubectl get nodes
+# kubectl apply -f k8s/pod.yaml
+# kubectl get pods
+# kubectl port-forward pod/goserver 8000:80
+# kubectl delete pod goserver
+
+# O kubernetes internamente pode ter várias versões da api. Por isso, preciso dizer qual versão eu estou usando.
+apiVersion: v1
+# Digo qual tipo de objeto eu estou criando. Nesse caso, o pod.
+kind: Pod
+# Ele precisa ter algumas informações de metada, como o nome do pod.
+metadata:
+  # Nome do pod
+  name: "goserver"
+  # O label nos ajuda a fazer filtros, buscas, criar regras
+  labels:
+    app: "goserver"
+# Especificações do pod
+spec:
+  # Digo os containers que o pod vai rodar. Por padrão, sempre usamos um container por pod.
+  containers:
+    - name: "goserver"
+      image: "rutsatz/hello-go:latest"
