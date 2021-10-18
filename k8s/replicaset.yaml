@@ -1,0 +1,35 @@
+# kubectl apply -f k8s/replicaset.yaml
+# kubectl get pods
+# kubectl get replicasets
+# kubectl delete pod goserver-2zbts
+
+# apps/v1 é onde fica a api do ReplicaSet.
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  # nome do ReplicaSet
+  name: goserver
+  labels:
+    app: "goserver"
+spec:
+  # Posso dizer quantas réplicas que eu quero.
+  replicas: 2
+  # Precisamos filtrar para conseguir verificar todos os pods, encaminhar tráfego.
+  # Por isso a importância dos labels, pois agora eu filtro usando eles.
+  selector:
+    matchLabels:
+      # Nome do label colocado lá no arquivo do pod.
+      app: goserver
+  # Aqui configuro o meu pod. Então eu tenho um template do pod que eu quero rodar dentro do ReplicaSet.
+  # É basicamente as mesmas informações lá do arquivo do pod.
+  template:
+    metadata:
+      # O label nos ajuda a fazer filtros, buscas, criar regras
+      labels:
+        app: "goserver"
+    # Especificações do pod
+    spec:
+      # Digo os containers que o pod vai rodar. Por padrão, sempre usamos um container por pod.
+      containers:
+        - name: goserver
+          image: rutsatz/hello-go:latest
