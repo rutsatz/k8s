@@ -2,6 +2,7 @@
 # kubectl get pods
 # kubectl get replicasets
 # kubectl delete pod goserver-2zbts
+# kubectl describe pod goserver-kd6x8
 
 # apps/v1 é onde fica a api do ReplicaSet.
 apiVersion: apps/v1
@@ -32,4 +33,4 @@ spec:
       # Digo os containers que o pod vai rodar. Por padrão, sempre usamos um container por pod.
       containers:
         - name: goserver
-          image: rutsatz/hello-go:latest
+          image: "rutsatz/hello-go:v2"
