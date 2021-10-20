@@ -1,0 +1,18 @@
+# kubectl apply -f k8s/service.yaml
+# kubectl get services
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: goserver-service
+spec:
+  # Aplica um filtro, selecionando todos os pods que farão parte desse serviço.
+  selector:
+    app: goserver
+  type: ClusterIP
+  ports:
+  # O nome da porta. (Opcional)
+  - name: goserver-service
+    # A porta que o container está expondo.
+    port: 80
+    protocol: TCP
