@@ -13,6 +13,8 @@ spec:
   ports:
   # O nome da porta. (Opcional)
   - name: goserver-service
-    # A porta que o container está expondo.
+    # A porta que o service está expondo.
     port: 80
+    # A porta que o container está expondo. (o service fará um forward da porto 80 para a 8000 nesse caso)
+    targetPort: 8000
     protocol: TCP
