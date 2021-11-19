@@ -9,12 +9,21 @@ spec:
   # Aplica um filtro, selecionando todos os pods que farão parte desse serviço.
   selector:
     app: goserver
-  type: ClusterIP
+  # Expõe uma porta para fora do cluster. É um jeito mais antigo e pode ser usado para testes
+  # ou coisas temporárias.
+  type: NodePort
   ports:
   # O nome da porta. (Opcional)
   - name: goserver-service
-    # A porta que o service está expondo.
+    # A porta que o service está expondo. Mas como ele é um NodePort, ele vai liberar externamente a porta
+    # informada no nodePort.
     port: 80
     # A porta que o container está expondo. (o service fará um forward da porto 80 para a 8000 nesse caso)
     targetPort: 8000
     protocol: TCP
+    # Porta que vai ser exposta para fora do cluster. Precisa estar entre os ranges de > 30000 e < 32767.
+    # Se o nodePort não for informado, ele vai automaticamente gerar uma porta dentro dos limites do range.
+    # O que vai acontecer é o seguinte:
+    # Quem acessar a porta 30001 vai car na porta 80 do meu serviço (30001 -> 80)
+    # Todo mundo que cair na porta 80, vai ser redirecionado pra porta 8000 do container (80 -> 8000)
+    nodePort: 30001
